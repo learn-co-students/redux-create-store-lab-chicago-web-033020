@@ -1,4 +1,17 @@
-// write your createStore function here
+function createStore() {
+  let state;
+
+  function getState() {
+    return state
+  }
+
+  function dispatch(action = {type: '@@INIT'}) {
+    state = candyReducer(state, action)
+    render()
+  }
+
+  return {getState, dispatch}
+}
 
 function candyReducer(state = [], action) {
   switch (action.type) {
@@ -11,12 +24,15 @@ function candyReducer(state = [], action) {
 
 function render() {
   let container = document.getElementById('container');
-  if(store.getState()) {
+  if (store.getState()) {
     container.textContent = store.getState().join(' ')
-  } else {
+  }
+  else {
     throw new Error("the store's state has not been defined yet")
   }
 };
 
 // use your createStore function and the functions provided here to create a store
 // once the store is created, call an initial dispatch
+let store = createStore()
+store.dispatch()
